@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f1f1f1;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.navbar {
+  border-bottom: 2px solid #333;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 30px;
+}
+
+.container {
+  max-width: 295px;
+  width: 100%;
+  margin: 10px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 5px;
+}
+
+.letter {
+  border: solid 3px #ccc;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.correct {
+  background-color: darkgreen;
+  color: white;
+}
+
+.close {
+  background-color: goldenrod;
+  color: white;
+}
+
+.wrong {
+  background-color: #888;
+  color: white;
+}
+
+.invalid {
+  animation: flash 1s;
+}
+
+@keyframes flash {
+  5% {
+    border-color: crimson;
+  }
+
+  100% {
+    border-color: #ccc;
+  }
+}
+
+.info-bar {
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.show {
+  visibility: visible;
+}
+
+.spinner {
+  font-size: 40px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
