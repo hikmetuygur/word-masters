@@ -1,7 +1,10 @@
 const letters = document.querySelectorAll(".letter");
 const loadingDiv = document.querySelector(".info-bar");
+const title = document.querySelector(".title");
+const alert = document.querySelector(".alert");
 const ANSWER_LENGTH = 5;
 const ROUNDS = 6;
+const jsConfetti = new JSConfetti();
 
 async function init() {
   let currentGuess = "";
@@ -35,7 +38,26 @@ async function init() {
       return;
     }
 
-    // TODO validate the word
+    // validate the word
+    isLoading = true;
+    setLoading(true);
+
+    const res = await fetch("https://words.dev-apis.com/validate-word", {
+      method: "POST",
+      body: JSON.stringify({ word: currentGuess }),
+    });
+
+    const resObj = await res.json();
+    const validWord = resObj.validWord;
+    // const { validWord } = resObj;
+
+    isLoading = false;
+    setLoading(false);
+
+    if (!validWord) {
+      markInvalidWord();
+      return;
+    }
 
     // do all marking and correct, close, wrong
     const guessParts = currentGuess.split("");
@@ -45,6 +67,9 @@ async function init() {
       if (guessParts[i] === wordParts[i]) {
         letters[currentRow * ANSWER_LENGTH + i].classList.add("correct");
         map[guessParts[i]]--;
+        jsConfetti.addConfetti({
+          emojis: ["💐", "🌹", "🌼", "🌸"],
+        });
       }
     }
 
@@ -62,11 +87,13 @@ async function init() {
     // did user win or lose ???
     if (currentGuess === word) {
       //win
-      alert("you win!");
+      alert.innerText = "You win!";
+      alert.classList.add("winner");
+      title.classList.add("winner");
       done = true;
       return;
     } else if (currentRow === ROUNDS) {
-      alert(`you lose. the word was ${word}`);
+      alert.innerText = `you lose. the word was ${word}`;
       done = true;
     }
     currentRow++;
@@ -76,6 +103,21 @@ async function init() {
   function backspace() {
     currentGuess = currentGuess.substring(0, currentGuess.length - 1);
     letters[ANSWER_LENGTH * currentRow + currentGuess.length].innerText = "";
+  }
+
+  function markInvalidWord() {
+    for (let i = 0; i < ANSWER_LENGTH; i++) {
+      letters[currentRow * ANSWER_LENGTH + i].classList.remove("invalid");
+
+      setTimeout(function () {
+        letters[currentRow * ANSWER_LENGTH + i].classList.add("invalid");
+      }, 20);
+    }
+    alert.innerText = "Not a valid word.";
+
+    setTimeout(function () {
+      alert.innerText = "";
+    }, 1000);
   }
 
   document.addEventListener("keydown", function handleKeyPress(e) {
