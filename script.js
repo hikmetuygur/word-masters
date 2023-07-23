@@ -67,9 +67,6 @@ async function init() {
       if (guessParts[i] === wordParts[i]) {
         letters[currentRow * ANSWER_LENGTH + i].classList.add("correct");
         map[guessParts[i]]--;
-        jsConfetti.addConfetti({
-          emojis: ["💐", "🌹", "🌼", "🌸"],
-        });
       }
     }
 
@@ -91,6 +88,9 @@ async function init() {
       alert.classList.add("winner");
       title.classList.add("winner");
       done = true;
+      jsConfetti.addConfetti({
+        emojis: ["💐", "🌹", "🌼", "🌸"],
+      });
       return;
     } else if (currentRow === ROUNDS) {
       alert.innerText = `you lose. the word was ${word}`;
