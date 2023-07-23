@@ -4,7 +4,8 @@ Wordle Masters is a simple word-guessing game where players try to guess a rando
 
 ## Preview
 
-![Word Masters Demo](/assets/wordle-preview.mp4)
+
+https://github.com/hikmetuygur/word-masters/assets/98219609/7eedaec5-db4e-49bb-90c2-b2c1ea6a1b77
 
 ## How to Play
 
